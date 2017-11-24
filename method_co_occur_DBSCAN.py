@@ -71,7 +71,7 @@ def facet_embedding(db):
 #The matplot give error on the server!!
 def calculate_s_scores(X, min_k, max_k):
   s = []
-  with open(cfg.folder_culsters + "silhouette_scores_between_multilabel_{}_{}.csv".format(min_k,max_k), 'w', encoding="UTF-8") as f:
+  with open(cfg.folder_clusters + "silhouette_scores_between_multilabel_{}_{}.csv".format(min_k,max_k), 'w', encoding="UTF-8") as f:
     for n_clusters in range(min_k, max_k):
       kmeans = KMeans(n_clusters=n_clusters, init='k-means++', max_iter=100, n_init=1)
       kmeans.fit(X)  # instead of the countvectorizer
@@ -96,7 +96,7 @@ def calculate_s_scores(X, min_k, max_k):
   plt.plot(x, y)
   #plt.plot(x, y, 'rD', markevery=[3, 5, 9, 13])
   plt.grid(axis='y', linestyle='-')
-  plt.savefig(cfg.folder_culsters +'silhouette_4_kmeans_methods_large.png', bbox_inches='tight')
+  plt.savefig(cfg.folder_clusters +'silhouette_4_kmeans_methods_large.png', bbox_inches='tight')
   plt.show()
 """
 
@@ -104,7 +104,7 @@ def calculate_s_scores(X, min_k, max_k):
 def write_clusters(X,k_values,svd,vectorizer):
   print()
   print("Write results in Methods_Clusters_DataPipelines.csv ")
-  with open(cfg.folder_culsters + "Methods_Clusters_DataPipelines_multilabel.csv", 'w', encoding="UTF-8") as f:
+  with open(cfg.folder_clusters + "Methods_Clusters_DataPipelines_multilabel.csv", 'w', encoding="UTF-8") as f:
     for k in k_values:
       km = KMeans(n_clusters=k, init='k-means++', max_iter=100, n_init=1, verbose=False)
       km.fit(X)

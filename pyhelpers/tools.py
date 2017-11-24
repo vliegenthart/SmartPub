@@ -154,7 +154,7 @@ def create_all_folders():
     os.makedirs(cfg.folder_datasets, exist_ok=True)
     os.makedirs(cfg.folder_classifiers, exist_ok=True)
     os.makedirs(cfg.folder_pickle, exist_ok=True)
-    os.makedirs(cfg.folder_culsters, exist_ok=True)
+    os.makedirs(cfg.folder_clusters, exist_ok=True)
 
 
 ##

@@ -40,7 +40,7 @@ def main():
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
 
     print('Estimated number of clusters: %d' % n_clusters_)
-    with open(cfg.folder_culsters + "DBSCAN_W2V_model_{}.csv".format(num), 'w', encoding='UTF-8') as f:
+    with open(cfg.folder_clusters + "DBSCAN_W2V_model_{}.csv".format(num), 'w', encoding='UTF-8') as f:
       for i in range(n_clusters_):
         f.write("cluster {}:, Anotate Here,".format(i))
         for j, label in enumerate(labels):

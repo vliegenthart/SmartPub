@@ -7,7 +7,7 @@ import config as cfg
 
 
 def print_top_words(model, feature_names, n_top_words):
-  with open(cfg.folder_culsters + "lda_full_text.csv", 'w', encoding='UTF-8') as f:
+  with open(cfg.folder_clusters + "lda_full_text.csv", 'w', encoding='UTF-8') as f:
     for topic_idx, topic in enumerate(model.components_):
       print("Topic #%d:" % topic_idx)
       f.write("Topic #%d:" % topic_idx)
