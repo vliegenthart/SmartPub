@@ -163,16 +163,17 @@ function for generating the training data using the extracted terms only (TE)
 
 def post_generate_training(numberOfSeeds,name,numberOfIteration,iteration):
 
-        dsnames=[]
-        corpuspath=ROOTHPATH+'/evaluation_files/X_Seeds_' + str(numberOfSeeds) + '_' + str(iteration) + '.txt'
+        dsnames = []
+        corpuspath = ROOTHPATH + '/evaluation_files/X_Seeds_' + str(numberOfSeeds) + '_' + str(iteration) + '.txt'
         with open(corpuspath, "r") as file:
             for row in file.readlines():
                 dsnames.append(row.strip())
 
+        # Extra terms are added to the dsnames??
         for i in range(1, int(numberOfIteration) + 1):
             try:
-                with open( ROOTHPATH+'/evaluation_files/' + name + '_Iteration' + str(i) + '_POS_' + str(
-                                                        numberOfSeeds) + '_' + str(iteration) + '.txt', 'r') as file:
+                with open(ROOTHPATH+'/evaluation_files/' + name + '_Iteration' + str(i) + '_POS_' + str(
+                    numberOfSeeds) + '_' + str(iteration) + '.txt', 'r') as file:
                     for row in file.readlines():
                         dsnames.append(row.strip())
             except:
@@ -181,27 +182,28 @@ def post_generate_training(numberOfSeeds,name,numberOfIteration,iteration):
 
         # for i in range(0, int(numberOfIteration) + 1):
         with open(ROOTHPATH + '/evaluation_files/' + name + 'Pre_Iteration' + str(numberOfIteration) + '_POS_' + str(
-                        numberOfSeeds) + '_' + str(iteration) + '.txt', 'r') as file:
-                    for row in file.readlines():
-                        dsnames.append(row.strip())
+            numberOfSeeds) + '_' + str(iteration) + '.txt', 'r') as file:
+            for row in file.readlines():
+                dsnames.append(row.strip())
 
         dsnames=[x.lower() for x in dsnames]
         dsnames = list(set(dsnames))
 
-
+        # in the first iteration use the initial text extracted using the seeds
         if int(numberOfIteration) == 0:
             fileUnlabelled = open(
                 ROOTHPATH + '/evaluation_files/X_train_' + str(numberOfSeeds) + '_' + str(iteration) + '.txt', 'r')
+        
+        # in the next iterations use the text extracted using the new set of seeds
         else:
             fileUnlabelled = open(
                 ROOTHPATH + '/evaluation_files/' + name + 'text_Iteration' + numberOfIteration + str(numberOfSeeds) + '_' + str(
                     iteration) + '.txt')
 
-        text=fileUnlabelled.read()
-        text=text.replace('\\','')
-        text=text.replace('/','')
+        text = fileUnlabelled.read()
+        text = text.replace('\\','')
+        text = text.replace('/','')
         text = text.replace('"', '')
-
 
         text = text.replace('(', '')
         text = text.replace(')', '')
@@ -211,8 +213,9 @@ def post_generate_training(numberOfSeeds,name,numberOfIteration,iteration):
         text = text.replace('?', ' ?')
         text = text.replace('..', '.')
 
-
         lines = (tokenize.sent_tokenize(text.strip()))
+
+        # Generate training data using sentences extracted
         labelledtext = list()
 
         print(len(lines))
@@ -341,16 +344,14 @@ def post_generate_trainingSE(numberOfSeeds, name, numberOfIteration, iteration,m
 
     dsnames = []
     dstemp = []
-    corpuspath = ROOTHPATH + '/evaluation_files/X_Seeds_' + str(numberOfSeeds) + '_' + str(
-        iteration) + '.txt'
+    corpuspath = ROOTHPATH + '/evaluation_files/X_Seeds_' + str(numberOfSeeds) + '_' + str(iteration) + '.txt'
     with open(corpuspath, "r") as file:
         for row in file.readlines():
             dsnames.append(row.strip())
             dstemp.append(row.strip())
 
     try:
-        with open(ROOTHPATH + '/evaluation_files/' + name + 'Pre_Iteration' + str(
-                numberOfIteration) + '_POS_' + str(
+        with open(ROOTHPATH + '/evaluation_files/' + name + 'Pre_Iteration' + str(numberOfIteration) + '_POS_' + str(
             numberOfSeeds) + '_' + str(iteration) + '.txt', 'r') as file:
             for row in file.readlines():
                 dsnames.append(row.strip())
@@ -361,14 +362,15 @@ def post_generate_trainingSE(numberOfSeeds, name, numberOfIteration, iteration,m
     dsnames = [x.lower() for x in dsnames]
     dsnames = list(set(dsnames))
 
+    # in the first iteration use the initial text extracted using the seeds
     if int(numberOfIteration) == 0:
         fileUnlabelled = open(
-            ROOTHPATH + '/evaluation_files/X_train_' + str(numberOfSeeds) + '_' + str(
-                iteration) + '.txt', 'r')
+            ROOTHPATH + '/evaluation_files/X_train_' + str(numberOfSeeds) + '_' + str(iteration) + '.txt', 'r')
+    
+    # in the next iterations use the text extracted using the new set of seeds
     else:
         fileUnlabelled = open(
-            ROOTHPATH + '/evaluation_files/' + name + 'text_Iteration' + numberOfIteration + str(
-                numberOfSeeds) + '_' + str(
+            ROOTHPATH + '/evaluation_files/' + name + 'text_Iteration' + numberOfIteration + str(numberOfSeeds) + '_' + str(
                 iteration) + '.txt')
 
     text = fileUnlabelled.read()
@@ -385,6 +387,13 @@ def post_generate_trainingSE(numberOfSeeds, name, numberOfIteration, iteration,m
     text = text.replace('..', '.')
 
     lines = (tokenize.sent_tokenize(text.strip()))
+    
+    ####################################
+    #     EXTRA STEP FOR SENTENCES     #
+    ####################################
+
+    # THIS IS WHERE SENTENCE EXPANSION HAPPENS
+
     temp = []
     print(len(lines))
     for i, line in enumerate(lines):
@@ -409,6 +418,12 @@ def post_generate_trainingSE(numberOfSeeds, name, numberOfIteration, iteration,m
     temp = list(set(temp))
     for tt in temp:
         lines.append(tt)
+    
+    #####################################
+    #     EXTRA STEP FOR SENTENCES     #
+    #####################################
+`
+    # Generate training data using sentences extracted
     labelledtext = list()
 
     print(len(lines))

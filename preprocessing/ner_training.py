@@ -36,7 +36,7 @@ def training_austenprop(numberOfSeeds,name,numberOfIteration):
 
 def create_austenprop(numberOfSeeds,name,numberOfIteration):
 
- for iteration in range(0,10):
+    for iteration in range(0,10):
         outputfile = open('/data/austen.prop', 'r')
         text=outputfile.read()
         print(text)
