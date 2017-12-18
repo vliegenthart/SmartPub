@@ -67,7 +67,7 @@ def find_word_clusters(labels_array, cluster_labels):
 
 def clusteringec_all_dataset(numberOfSeeds,name ,numberOfIteration,iteration):
 
-    #in the first iteration use the initial text extracted using the seeds
+    # in the first iteration use the initial text extracted using the seeds
     if int(numberOfIteration) == 0:
         fileUnlabelled = ROOTHPATH + '/evaluation_files/X_train_' + str(numberOfSeeds) + '_' + str(iteration) + '.txt'
 
